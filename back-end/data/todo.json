@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Belajar Sequelize Associations",
+    "description": "Pahami cara kerja 1:1, 1:N, dan N:M di Sequelize",
+    "status": "pending",
+    "priority": "high",
+    "userId": 1,
+    "dueDate": "2025-11-01"
+  },
+  {
+    "title": "Buat API Todo List",
+    "description": "Implementasi CRUD Todo List dengan Express dan PostgreSQL",
+    "status": "in-progress",
+    "priority": "medium",
+    "userId": 2,
+    "dueDate": "2025-11-05"
+  }
+]
