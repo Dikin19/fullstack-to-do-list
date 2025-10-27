@@ -18,6 +18,15 @@ module.exports = {
       avatarUrl: {
         type: Sequelize.STRING
       },
+
+      userId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          key : "id"
+        },
+      },
+      
       phone: {
         type: Sequelize.STRING
       },

@@ -21,6 +21,15 @@ module.exports = {
       priority: {
         type: Sequelize.STRING
       },
+
+      userId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          key : "id"
+        },
+      },
+
       dueDate: {
         type: Sequelize.DATE
       },
