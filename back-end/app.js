@@ -1,5 +1,5 @@
-const test = (satu, dua) =>{
-    return satu + dua
-}
+const express = require('express')
 
-console.log(test(10,11));
+const app = express()
+
+app.use('/', router)
