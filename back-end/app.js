@@ -1,5 +1,6 @@
 const express = require('express')
-const router = require('./router')
+const router = require('./router');
+const errorHandler = require('./midlewares/errorHandler');
 
 const app = express()
 const port = 3000
@@ -10,6 +11,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // mount router
 app.use('/', router)
+
+app.use(errorHandler);
 
 app.listen(port, () => {
     console.log(`server can be run on port ${port}`);
