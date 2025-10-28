@@ -34,14 +34,24 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type:  DataTypes.STRING,
       allowNull: false,
-      unique: true,
+
+      unique: {
+        msg: "Email must be unique"
+        },
+
       validate: {
         notEmpty: {
           msg : "Email is required!"
         },
+
+        notNull:{
+          msg: "Email is required"
+        },
+
         isEmail:{
           msg: "Email must be email format"
         }
+
       }
     },
 
@@ -62,7 +72,14 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
-  });
+
+    indexes: [
+            {
+              unique: true,
+              fields: ['email']
+            }
+          ]
+    });
 
   User.beforeCreate((user) => {
     user.password = hashPassword(user.password)
