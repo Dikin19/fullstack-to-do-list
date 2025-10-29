@@ -2,7 +2,7 @@ const { User } = require("../models")
 const { comparePassword } = require('../helpers/bcrypt')
 const { signToken } = require('../helpers/jwt')
 
-module.exports = class UserController {
+module.exports = class AuthController {
     
 
     static async register(req, res, next) {

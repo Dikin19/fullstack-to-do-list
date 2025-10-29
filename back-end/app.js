@@ -11,7 +11,7 @@ const port = 3000
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// mount router
+
 app.use('/', router)
 
 app.use(errorHandler);
