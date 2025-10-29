@@ -7,13 +7,8 @@ class AdminController {
         try {
 
             const data = await User.findAll({
-
-                include:[
-                    {
-                        model: User,
-                        attributes: { exclude: ['password']}
-                    }
-                ]
+                
+                attributes: { exclude: ['password']}
 
             })
 
