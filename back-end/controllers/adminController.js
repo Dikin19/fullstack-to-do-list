@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 const {User} = require('../models')
 
 class AdminController {
@@ -22,7 +23,93 @@ class AdminController {
 
     }
 
+    static async updateUserReturning(req, res, next){
 
+        try {
+
+            const user = await User.findByPk(req.params.id)
+            // const {id} = req.params
+            // const user = await User.findByPk(id)
+            console.log(user, 'apakah data user masuk?');
+            
+            if (!user) throw({name: 'NotFound', message: 'User is not found'})
+
+            const {username, email} = req.body
+
+            const result = await User.update(
+
+                {
+                    username,
+                    email
+                },
+
+                {
+                    where : {
+                        // id: user.id // where kita
+                        id: req.params.id
+                    },
+                    returning: true
+                    
+                }
+            )
+            
+            console.log(result[1][0], 'apa hasilya');
+            res.status(200).json(result[1][0])
+
+        } catch (err) {
+            console.log(err, 'dari cacth');
+            next(err)
+            
+        }
+
+    }
+
+    static async updateUser(req, res, next){
+
+        try {
+
+            const user = await User.findByPk(req.params.id)
+            console.log(user, 'apakah data masuk?');
+
+            if (!user) throw({name: 'NotFound', message: 'User is not found'})
+            
+            const {username, email} = req.body
+
+            const updateSementara = await User.update(
+                {
+                    username,
+                    email
+                },
+                {
+                    where: {id: req.params.id}
+                }
+            )
+
+            const updateResult = await User.findByPk(
+                
+                req.params.id,
+
+                {
+                    attributes: {exclude: ['password']}
+                }
+            )
+
+            console.log(updateSementara, 'updateSementara');
+            console.log(updateResult, 'updateBerhasil');
+
+            res.status(200).json(updateResult)
+            
+            
+            
+        } catch (err) {
+            next(err)
+            
+        }
+
+    }
+
+
+    
 }
 
 
