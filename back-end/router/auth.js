@@ -11,7 +11,14 @@ auth.post('/testinglogin', (req, res) => {
 
     const {email, password} = req.body
 
-    console.log(email, password);
+    console.log(email, password, 'ini hasil dari body');
+
+    res.json({
+        message: 'api masuk dan berhasil request',
+        email,
+        password
+
+     })
 
 
 })
