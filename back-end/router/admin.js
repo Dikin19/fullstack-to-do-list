@@ -10,6 +10,7 @@ admin.post('/testing', (req, res) => {
 
 admin.get('/find-all-users', AdminController.findAllUsers)
 admin.put('/update/:id', AdminController.updateUser)
+admin.patch('/updatePatch/:id', AdminController.updateUserByPatch ) // untuk satu field
 
 
 

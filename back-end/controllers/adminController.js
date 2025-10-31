@@ -108,8 +108,44 @@ class AdminController {
 
     }
 
+    static async updateUserByPatch(req, res, next){
 
-    
+        try {
+
+            const {id} = req.params
+            // const {id} = req.query
+
+            const {username, email} = req.body
+
+            const user = await User.findByPk(id)
+            console.log(user, 'apakah data ini masuk');
+
+            if (!user) throw({name: "NotFound", message: "User is not found "})
+            
+            const dataBaru = {}
+            
+            if (username) dataBaru.username = username
+            if (email) dataBaru.email = email
+            console.log(dataBaru, 'apakahh data baru masuk?');
+
+            if (!dataBaru || Object.keys(dataBaru).length===0) 
+                throw({name: "BadRequest", message: "There is no data to update"})
+            
+            
+            
+
+            
+        } catch (err) {
+            next(err)
+            
+        }
+
+        
+
+    }
+
+
+
 }
 
 
