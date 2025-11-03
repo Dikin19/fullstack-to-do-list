@@ -1,4 +1,4 @@
-const { where } = require('sequelize');
+const { where, json } = require('sequelize');
 const {User} = require('../models')
 
 class AdminController {
@@ -130,8 +130,47 @@ class AdminController {
 
             if (!dataBaru || Object.keys(dataBaru).length===0) 
                 throw({name: "BadRequest", message: "There is no data to update"})
+
+            // jika tanpa returning true hanya mengembalikan baris tanpa data yang sudah di update
+            // const dataUpadate = await User.update(dataBaru, {where: {id}})
+            // console.log("dataUpadate",dataUpadate);
+
+            // Lakukan update ke database
+            // returning: true artinya Sequelize akan langsung kasih balik data barunya
+            const [jumlahBaris, barisYangSudahDiubah] = await User.update(
+                dataBaru, 
+                        {
+                            where: { id },
+                            returning: true, // agar dapat data hasil update
+                        }
+                    );
             
+            console.log("jumlahBaris:", jumlahBaris);
+            console.log("barisYangSudahDiubah", barisYangSudahDiubah)
             
+//             Fungsi JSON.stringify() sebenarnya punya 3 parameter: JSON.stringify(value, replacer, space)
+//             value → data yang mau diubah jadi string (di sini: barisYangSudahDiubah)
+//             replacer → bisa digunakan untuk memilih properti mana yang mau disertakan (biasanya diisi null kalau mau semuanya)
+//             space → jumlah spasi untuk membuat tampilan JSON lebih rapi (indentasi)
+//             Jadi: JSON.stringify(barisYangSudahDiubah, null, 2)
+//              artinya: "Ubah objek barisYangSudahDiubah menjadi string JSON dengan indentasi 2 spasi agar lebih mudah dibaca."
+            console.log("barisYangSudahDiubah (raw):", JSON.stringify(barisYangSudahDiubah, null, 2) );
+
+            console.log("userInstance:", barisYangSudahDiubah[0]);
+            console.log("userInstance.dataValues:", barisYangSudahDiubah[0].dataValues); // cara pertama
+
+            const userInstance = barisYangSudahDiubah[0];
+            // ambil dataValues
+            console.log("dataValues:", userInstance.dataValues); // cara kedua
+
+            const {password, ...tanpaPassword} = userInstance.dataValues
+            console.log("data yang ingin dihilangkan", password);
+            console.log("data baru tanpa password", tanpaPassword);
+
+            res.status(200).json({
+                message: "Data user berhasil diubah",
+                data: tanpaPassword
+            })
             
 
             
@@ -141,6 +180,78 @@ class AdminController {
         }
 
         
+
+    }
+
+    static async updateUserByPatchQuery(req, res, next){
+
+        try {
+
+            const {id} = req.query
+
+            const {username, email} = req.body
+
+            const user = await User.findByPk(id)
+            console.log(user, 'apakah data ini masuk');
+
+            if (!user) throw({name: "NotFound", message: "User is not found "})
+            
+            const dataBaru = {}
+            
+            if (username) dataBaru.username = username
+            if (email) dataBaru.email = email
+            console.log(dataBaru, 'apakahh data baru masuk?');
+
+            if (!dataBaru || Object.keys(dataBaru).length===0) 
+                throw({name: "BadRequest", message: "There is no data to update"})
+
+            // jika tanpa returning true hanya mengembalikan baris tanpa data yang sudah di update
+            // const dataUpadate = await User.update(dataBaru, {where: {id}})
+            // console.log("dataUpadate",dataUpadate);
+
+            // Lakukan update ke database
+            // returning: true artinya Sequelize akan langsung kasih balik data barunya
+            const [jumlahBaris, barisYangSudahDiubah] = await User.update(
+                dataBaru, 
+                        {
+                            where: { id },
+                            returning: true, // agar dapat data hasil update
+                        }
+                    );
+            
+            console.log("jumlahBaris:", jumlahBaris);
+            console.log("barisYangSudahDiubah", barisYangSudahDiubah)
+            
+//             Fungsi JSON.stringify() sebenarnya punya 3 parameter: JSON.stringify(value, replacer, space)
+//             value → data yang mau diubah jadi string (di sini: barisYangSudahDiubah)
+//             replacer → bisa digunakan untuk memilih properti mana yang mau disertakan (biasanya diisi null kalau mau semuanya)
+//             space → jumlah spasi untuk membuat tampilan JSON lebih rapi (indentasi)
+//             Jadi: JSON.stringify(barisYangSudahDiubah, null, 2)
+//              artinya: "Ubah objek barisYangSudahDiubah menjadi string JSON dengan indentasi 2 spasi agar lebih mudah dibaca."
+            console.log("barisYangSudahDiubah (raw):", JSON.stringify(barisYangSudahDiubah, null, 2) );
+
+            console.log("userInstance:", barisYangSudahDiubah[0]);
+            console.log("userInstance.dataValues:", barisYangSudahDiubah[0].dataValues); // cara pertama
+
+            const userInstance = barisYangSudahDiubah[0];
+            // ambil dataValues
+            console.log("dataValues:", userInstance.dataValues); // cara kedua
+
+            const {password, ...tanpaPassword} = userInstance.dataValues
+            console.log("data yang ingin dihilangkan", password);
+            console.log("data baru tanpa password", tanpaPassword);
+
+            res.status(200).json({
+                message: "Data user berhasil diubah",
+                data: tanpaPassword
+            })
+            
+
+            
+        } catch (err) {
+            next(err)
+            
+        }
 
     }
 
