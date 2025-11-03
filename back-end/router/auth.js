@@ -4,23 +4,21 @@ const auth = express.Router()
 
 
 auth.post('/register', AuthController.register )
-
 auth.post('/login', AuthController.login )
 
+// Example of a protected route: requires a valid Bearer token.
+// NOTE: keep `/register` (and `/login`) public so users can create accounts and obtain tokens.
 auth.post('/testinglogin', (req, res) => {
+    const { email, password } = req.body
 
-    const {email, password} = req.body
-
-    console.log(email, password, 'ini hasil dari body');
+    console.log(email, password, 'hasil dari body');
 
     res.json({
-        message: 'api masuk dan berhasil request',
+        message: 'Protected route: request succeeded',
         email,
-        password
-
-     })
-
-
+        password,
+        userFromToken: req.user,
+    })
 })
 
 

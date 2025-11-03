@@ -29,7 +29,12 @@
         } else if (err.name === 'InvalidToken' || err.name === 'JsonWebTokenError') {
           res.status(401).json({ message: "Invalid token" })
           console.log('apakah pesan InvalidToken or JsonWebTokenError', message);
-          
+          // | Kondisi                     | Error Name            | Pesan                       | Sumber                               |
+// | --------------------------- | --------------------- | --------------------------- | ------------------------------------ |
+// | Tidak kirim token           | `"Unauthorized"`      | `"Authentication required"` | kamu buat di `authentication.js`     |
+// | Token rusak/expired         | `"InvalidToken"`      | `"Invalid token"`           | kamu buat di `verifyToken()`         |
+// | Token format salah dari JWT | `"JsonWebTokenError"` | `"jwt malformed"`           | otomatis dari library `jsonwebtoken` |
+
           
         } else if (err.name === 'Forbidden') {
           res.status(403).json({ message: err.message }) 
