@@ -11,7 +11,8 @@ admin.post('/testing', (req, res) => {
 admin.get('/find-all-users', AdminController.findAllUsers)
 admin.put('/update/:id', AdminController.updateUser)
 admin.patch('/updatePatch/:id', AdminController.updateUserByPatch ) // untuk satu field by params
-admin.patch('/updatePatch', AdminController.updateUserByPatchQuery) // untuk satu field by query
+admin.patch('/updatePatch', AdminController.updateUserByPatchQuery) // untuk satu field by query  
+admin.delete('/:id', AdminController.deleteById)
 
 
 

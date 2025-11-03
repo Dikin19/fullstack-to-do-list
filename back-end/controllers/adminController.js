@@ -1,4 +1,4 @@
-const { where, json } = require('sequelize');
+const { where } = require('sequelize');
 const {User} = require('../models')
 
 class AdminController {
@@ -255,6 +255,34 @@ class AdminController {
 
     }
 
+    static async deleteById(req, res, next){
+
+        const {id} = req.params
+
+        const user = await User.findByPk(id)
+
+        console.log(user);
+
+        if (!user) throw({name: "NotFound", message: "User is not found"})
+        
+        // jika isDeleted = true
+        if (user.isDeleted) throw({ name: "BadRequest", message: "User already deleted" })
+        
+        await User.update(
+            { isDeleted: true }, // data yang ingin diubah
+            { where: { id } }    // kondisi baris yang diubah
+        );
+
+        res.status(200).json({
+            status: "success",
+            message: `User ${user.username} deleted successfully`,
+            data: {
+                deletedAt: new Date().toISOString()
+            }
+        });
+
+
+    }
 
 
 }

@@ -69,6 +69,13 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
 
+  isDeleted: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+
+
   }, {
     sequelize,
     modelName: 'User',
