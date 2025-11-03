@@ -14,6 +14,12 @@ query.post('/', (req, res) => {
 
 query.post('/register', AuthController.register )
 query.post('/login', AuthController.login )
+query.get('/getAllUsers', AuthController.getAllUsers)
+query.put('/updatePut/:id', AuthController.updateUserReturning )
+// query.put('/updatePut/:id', AuthController.updateUser) sama dengan updateUserReturning hanya beda logic.
+query.patch('/updatePatch/:id', AuthController.updateUserByPatch )
+query.patch('/updatePatch', AuthController.updateUserByPatchQuery)
+query.delete('/:id',AuthController.deleteById)
 
 
 
