@@ -75,6 +75,18 @@ module.exports = (sequelize, DataTypes) => {
     defaultValue: false
   },
 
+  status:{
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: 'customer',
+    validate: {
+      isIn: {
+        args: [['customer', 'admin']],
+        msg: 'Status must be customer or admin'
+      }
+    }
+  },
+
 
   }, {
     sequelize,

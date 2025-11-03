@@ -4,11 +4,14 @@ module.exports = {
   async up(queryInterface, Sequelize) {
 
   
-    await queryInterface.addConstraint('Users', {
+    await queryInterface.addConstraint(
+      'Users', 
+      {
       fields: ['email'],
       type: 'unique',
       name: 'unique_email_constraint'
-    });
+      }
+  );
 
     
   //   await queryInterface.addConstraint('Users', {
