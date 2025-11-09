@@ -3,6 +3,7 @@ const { verifyToken } = require('../helpers/jwt')
 
 module.exports = function authentication(req, res, next) {
     try {
+
         const authHeader = req.headers.authorization
 
         if (!authHeader) throw({ name: "Unauthorized", message: "Authentication required" })
@@ -11,15 +12,19 @@ module.exports = function authentication(req, res, next) {
 
         // ambil kata setelah bearer atau index ke 7 yaitu huruf awal token yg akan menjadi token
         // jika tidak ada bearer gunakan autheader apa adaanya.
+
         const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : authHeader
         
         if (!token) throw({name: "Unauthorized", message: "Authentication required" })
+
         console.log('token setelah autheader menjadi token: ',token);
 
         const payload = verifyToken(token)
         // menampilkan hasil verfytoken yg berbentuk id dan iat
         console.log('ini isi payload', payload);
+
         req.user = payload
+        
         console.log('req.user sekarang:', req.user);
         next()
 

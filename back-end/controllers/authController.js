@@ -6,7 +6,9 @@ module.exports = class AuthController {
     
 
     static async register(req, res, next) {
+
         try {
+
             const { username, email, password } = req.body
 
             // basic validation
@@ -21,9 +23,11 @@ module.exports = class AuthController {
             })
 
             return res.status(201).json({
+
                 id: dataUser.id,
                 username: dataUser.username,
                 email: dataUser.email
+                
             })
 
         } catch (err) {

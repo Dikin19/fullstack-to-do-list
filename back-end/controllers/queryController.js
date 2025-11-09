@@ -6,6 +6,7 @@ module.exports = class AuthController {
 
     static async register(req, res, next) {
         try {
+
             const { username, email, password } = req.body;
 
             console.log(username,email,password);
@@ -30,7 +31,10 @@ module.exports = class AuthController {
             console.log('values masuk gak', values);
 
             const result = await pool.query(query, values);
+
             console.log('ada gak result', result);
+
+            console.log('ada gak result', result.rows[0]);
 
             // ada gak result Result {
             // command: 'INSERT',
@@ -95,7 +99,9 @@ module.exports = class AuthController {
         try {
 
         const query = `SELECT id, username, email, "createdAt", "updatedAt", "isDeleted" FROM "Users" WHERE "isDeleted" = false;`;
+        
         const result = await pool.query(query);
+        
         res.status(200).json(result.rows);
 
         } catch (err) {

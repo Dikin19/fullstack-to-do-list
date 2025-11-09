@@ -22,6 +22,7 @@ query.patch('/updatePatch/:id', AuthController.updateUserByPatch )
 query.patch('/updatePatch', AuthController.updateUserByPatchQuery)
 query.delete('/:id',AuthController.deleteById)
 
+
 query.post('/create', async (req, res, next) => {
     try {
         const { username, email, password } = req.body;
