@@ -65,6 +65,12 @@ module.exports = (sequelize, DataTypes) => {
   },  {
     sequelize,
     modelName: 'Profile',
+    // Wajib untuk paranoid
+    timestamps: true,
+    // Aktifkan soft delete
+    paranoid: true,
+    // Opsional, default juga ‘deletedAt’
+    deletedAt: deletedAt
   });
   return Profile;
 };
