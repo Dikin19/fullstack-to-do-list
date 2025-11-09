@@ -1,5 +1,6 @@
 const express = require('express')
 const TodoController = require('../controllers/todoController')
+const ProfileController = require('../controllers/profileController')
 const customer = express.Router()
 
 
@@ -17,7 +18,7 @@ customer.post('/create-todo', TodoController.createTodo)
 customer.put('/update-todo/:id',TodoController.updateTodo)
 customer.delete('/delete/:id', TodoController.deleteTodo)
 
-// customer.get('/')
+customer.get('/find-all-profiles',ProfileController.findAllProfiles)
 
 
-module.exports = customer
+module.exports = customer 

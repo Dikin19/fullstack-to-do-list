@@ -70,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
     // Aktifkan soft delete
     paranoid: true,
     // Opsional, default juga ‘deletedAt’
-    deletedAt: deletedAt
+    deletedAt: 'deletedAt'
   });
   return Profile;
 };
