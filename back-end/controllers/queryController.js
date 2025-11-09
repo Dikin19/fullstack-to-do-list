@@ -92,9 +92,7 @@ module.exports = class AuthController {
         }
     }
 
-    // ================================
     // GET /users
-    // ================================
     static async getAllUsers(req, res, next) {
         try {
 
@@ -110,9 +108,7 @@ module.exports = class AuthController {
         }
     }
 
-    // ================================
     // PUT /users/:id (dengan returning)
-    // ================================
     static async updateUserReturning(req, res, next) {
         try {
         const { id } = req.params;
@@ -139,9 +135,7 @@ module.exports = class AuthController {
         }
     }
 
-    // ================================
     // PUT /users/:id (tanpa returning)
-    // ================================
     static async updateUser(req, res, next) {
         try {
         const { id } = req.params;
@@ -171,9 +165,7 @@ module.exports = class AuthController {
         }
     }
 
-    // ================================
     // PATCH /users/:id
-    // ================================
     static async updateUserByPatch(req, res, next) {
 
         try {
@@ -223,9 +215,7 @@ module.exports = class AuthController {
         }
     }
 
-    // ================================
     // PATCH /users?id= (pakai query param)
-    // ================================
     static async updateUserByPatchQuery(req, res, next) {
 
         try {
@@ -273,9 +263,7 @@ module.exports = class AuthController {
         }
     }
 
-    // ================================
     // DELETE /users/:id
-    // ================================
     static async deleteById(req, res, next) {
         try {
         const { id } = req.params;
@@ -299,6 +287,7 @@ module.exports = class AuthController {
             message: `User ${user.username} deleted successfully`,
             data: { deletedAt: new Date().toISOString() },
         });
+        
         } catch (err) {
         console.error(err, 'deleteById error');
         next(err);

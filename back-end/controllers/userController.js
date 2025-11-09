@@ -1,6 +1,6 @@
 const {User} = require('../models')
 
-class AdminController {
+class UserController {
 
     static async findAllUsers(req, res, next){
 
@@ -287,4 +287,4 @@ class AdminController {
 }
 
 
-module.exports = AdminController
+module.exports = UserController

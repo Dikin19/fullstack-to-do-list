@@ -1,7 +1,7 @@
 const {Todo} = require('../models')
 
 
-module.exports = class CustomerController {
+module.exports = class TodoController {
 
     static async findAllTodo(req, res, next) {
 
