@@ -12,7 +12,9 @@ customer.post('/testing', (req, res) => {
   res.json({ message: 'customer name success', username })
 })
 
-customer.get('/find-all-todo', CustomerController.findAllTodo)
+customer.get('/find-all-todos', CustomerController.findAllTodo)
 customer.post('/create-todo', CustomerController.createTodo)
+customer.put('/update-todo/:id',CustomerController.updateTodo )
+
 
 module.exports = customer
