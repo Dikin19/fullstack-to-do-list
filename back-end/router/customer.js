@@ -14,7 +14,8 @@ customer.post('/testing', (req, res) => {
 
 customer.get('/find-all-todos', CustomerController.findAllTodo)
 customer.post('/create-todo', CustomerController.createTodo)
-customer.put('/update-todo/:id',CustomerController.updateTodo )
+customer.put('/update-todo/:id',CustomerController.updateTodo)
+customer.delete('/delete/:id', CustomerController.deleteTodo)
 
 
 module.exports = customer

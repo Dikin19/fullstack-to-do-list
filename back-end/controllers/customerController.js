@@ -1,10 +1,9 @@
-const { where } = require('sequelize');
 const {Todo} = require('../models')
 
 
 module.exports = class CustomerController {
 
-    static async findAllTodo (req, res, next) {
+    static async findAllTodo(req, res, next) {
 
         try {
             
@@ -176,6 +175,30 @@ module.exports = class CustomerController {
 
     }
 
-    
+    static async deleteTodo(req, res, next) {
+
+        try {
+
+            const {id} = req.params
+            console.log('\n apakah id request dari params masuk? :', id);
+
+            const deletedData = await Todo.findByPk(id)
+            console.log('\n apakah data yang ingin di delete masuk? :', deletedData);
+
+            if (!deletedData) throw({name: 'NotFound', message: `Data dengan id ${id} tidak ditemukan`})
+            
+            await deletedData.destroy();
+
+            res.status(200).json({
+                message: 'Todo berhasil dihapus'
+            })
+            
+        } catch (err) {
+            console.log(err);
+            next(err)
+            
+        }
+
+    }
 
 }
