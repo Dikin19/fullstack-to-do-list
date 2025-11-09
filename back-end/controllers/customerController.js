@@ -27,4 +27,52 @@ module.exports = class CustomerController {
             next(err)
         }
     }
+
+    static async createTodo(req, res, next){
+
+        try {
+            
+            const {title, description, status, priority, userId, dueDate} = req.body
+
+            console.log(`
+            ==============================
+            Request Body Masuk:
+            ==============================
+            Title      : ${title}
+            Description: ${description}
+            Status     : ${status}
+            Priority   : ${priority}
+            Due Date   : ${dueDate}
+            ==============================
+            `)
+
+            const newTodo = await Todo.create({
+                title,
+                description,
+                status,
+                priority,
+                userId,
+                dueDate
+            })
+
+            console.log('apakah data baru di variable newTodo masuk: ', newTodo);
+
+            return res.status(200).json({
+
+                title: newTodo.title,
+                description: newTodo.description,
+                status: newTodo.status,
+                priority: newTodo.priority,
+                userId: newTodo.userId,
+                dueDate: newTodo.dueDate
+            })
+
+        } catch (err) {
+            console.log(err);
+            next(err)
+            
+        }
+
+    }
+
 }

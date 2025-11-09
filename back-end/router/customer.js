@@ -13,5 +13,6 @@ customer.post('/testing', (req, res) => {
 })
 
 customer.get('/find-all-todo', CustomerController.findAllTodo)
+customer.post('/create-todo', CustomerController.createTodo)
 
 module.exports = customer
