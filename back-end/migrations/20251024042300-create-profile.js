@@ -21,10 +21,14 @@ module.exports = {
 
       userId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+        unique: true,
         references: {
           model: "Users",
           key : "id"
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       
       phone: {

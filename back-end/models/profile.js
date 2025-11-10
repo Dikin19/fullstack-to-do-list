@@ -60,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
 
       unique: {
-        msg: "UserId must be unique"
+        msg: "Each user can only have one profile"
       },
 
       validate: {
