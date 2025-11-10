@@ -56,13 +56,21 @@ module.exports = (sequelize, DataTypes) => {
         model: "Users",
         key: "id"
       },
+
       allowNull: false,
+
+      unique: {
+        msg: "UserId must be unique"
+      },
+
       validate: {
         notEmpty: { msg: "userId is required!" },
         notNull: { msg: "userId is required!" }
       }
     }
-  },  {
+  },  
+  
+  {
     sequelize,
     modelName: 'Profile',
     // Wajib untuk paranoid

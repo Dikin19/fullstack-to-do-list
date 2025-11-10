@@ -18,7 +18,7 @@ customer.post('/create-todo', TodoController.createTodo)
 customer.put('/update-todo/:id',TodoController.updateTodo)
 customer.delete('/delete/:id', TodoController.deleteTodo)
 
-customer.get('/find-all-profiles',ProfileController.findAllProfiles)
+
 
 
 module.exports = customer 

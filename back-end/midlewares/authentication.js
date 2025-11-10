@@ -1,31 +1,34 @@
 const { verifyToken } = require('../helpers/jwt')
+const {User} = require('../models')
 
 
-module.exports = function authentication(req, res, next) {
+module.exports = async function authentication(req, res, next) {
     try {
 
         const authHeader = req.headers.authorization
 
         if (!authHeader) throw({ name: "Unauthorized", message: "Authentication required" })
-
         console.log('req header: ',authHeader);
 
         // ambil kata setelah bearer atau index ke 7 yaitu huruf awal token yg akan menjadi token
         // jika tidak ada bearer gunakan autheader apa adaanya.
-
         const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : authHeader
         
         if (!token) throw({name: "Unauthorized", message: "Authentication required" })
-
         console.log('token setelah autheader menjadi token: ',token);
 
+    // menampilkan hasil verfytoken yg berbentuk id dan iat
         const payload = verifyToken(token)
-        // menampilkan hasil verfytoken yg berbentuk id dan iat
         console.log('ini isi payload', payload);
 
-        req.user = payload
-        
-        console.log('req.user sekarang:', req.user);
+        const user = await User.findByPk(payload.id)
+        // console.log('apakah data user dari payload masuk? :',user);
+        console.log('apakah data user dari payload masuk? :',user.dataValues);
+        if (!user) throw({name: 'InvalidToken', message: "Invalid Token"})
+
+        req.user = user
+        // method bawaan sequelize untuk mengambil dataValues
+        console.log('req.user sekarang:', req.user.get());
         next()
 
     } catch (err) {
