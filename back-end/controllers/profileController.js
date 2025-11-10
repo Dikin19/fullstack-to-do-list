@@ -1,4 +1,5 @@
 
+const { where } = require('sequelize');
 const {Profile} = require('../models')
 
 module.exports = class ProfileController {
@@ -24,6 +25,55 @@ module.exports = class ProfileController {
         } catch (err) {
             console.log(err);
             next(err)
+        }
+
+    }
+
+    static async findProfile (req, res, next) {
+
+        try {
+            
+            // data user yang sedang login menggunakan authentication
+            const isLogging = req.user
+
+            const userProfile = await Profile.findOne({
+
+                where: {
+                    userId: isLogging.id
+                }
+            })
+
+            if (!userProfile){
+                throw({name: 'NotFound', message: 'userProfile is not found'})
+            } else {
+                console.log('\n apakah data profile masuk? :', userProfile.get());
+            }
+
+            res.status(200).json({
+                status: 'success',
+                message: 'profile is found',
+                data: userProfile
+            })
+
+
+        } catch (err) {
+            console.log(err);
+            next(err)
+            
+        }
+
+    }
+
+    static async createProfile (req, res, next ) {
+
+        try {
+
+            // const {}
+            
+        } catch (err) {
+            console.log(err);
+            next(err)
+            
         }
 
     }

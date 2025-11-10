@@ -13,12 +13,16 @@ customer.post('/testing', (req, res) => {
   res.json({ message: 'customer name success', username })
 })
 
+
+// routes todos
 customer.get('/find-all-todos', TodoController.findAllTodo)
 customer.post('/create-todo', TodoController.createTodo)
 customer.put('/update-todo/:id',TodoController.updateTodo)
 customer.delete('/delete/:id', TodoController.deleteTodo)
 
-
+//routes profiles
+customer.post('/create-profile', ProfileController.createProfile)
+customer.get('/find-profile', ProfileController.findProfile)
 
 
 module.exports = customer 
