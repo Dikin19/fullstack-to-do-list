@@ -4,6 +4,8 @@ const {Profile} = require('../models')
 
 module.exports = class ProfileController {
 
+
+    //Admin
     static async findAllProfiles (req, res, next) {
 
         try {
@@ -68,7 +70,45 @@ module.exports = class ProfileController {
 
         try {
 
-            // const {}
+            const userId = req.user.id
+            console.log('\n apakah userId dari user yang sedang login masuk?:', userId);
+
+            const {
+
+                fullname,
+                bio,
+                avatarUrl,
+                phone
+
+            } = req.body
+            console.log(`
+                
+                apakah semua req body masuk?
+                ==============================
+                fullname: ${fullname}
+                bio: ${bio}
+                avatarUrl: ${avatarUrl}
+                phone: ${phone}
+                ==============================\n
+                
+                `);
+
+            const isProfileExist = await Profile.findOne({where: {userId}})
+            console.log('apakah profile sudah ada? :',isProfileExist);
+            if(isProfileExist) throw({name: 'BadRequest', message: 'Profile Already Exists for this user'})
+            
+            const newProfile = await Profile.create({
+                fullname,
+                bio,
+                avatarUrl,
+                phone,
+                userId
+            })
+
+            res.status(201).json({
+                message: 'Profile has been created',
+                Profile: newProfile
+            })
             
         } catch (err) {
             console.log(err);
