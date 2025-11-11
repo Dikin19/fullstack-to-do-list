@@ -1,5 +1,4 @@
 
-const { where } = require('sequelize');
 const {Profile} = require('../models')
 
 module.exports = class ProfileController {
@@ -115,6 +114,24 @@ module.exports = class ProfileController {
             next(err)
             
         }
+
+    }
+
+    static async updateProfile (req, res, next) {
+
+        const {id} = req.user
+        console.log(`
+            ==========================
+            apakah params sudah masu ? ${id}
+            ==========================
+            \n`);
+
+        const oldProfile = await Profile.findByPk(id)
+        console.log(`
+            '================================='
+            'Apakah data profile masuk ?' ${oldProfile}
+            '================================='
+            `);
 
     }
 

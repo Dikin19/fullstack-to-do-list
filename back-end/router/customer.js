@@ -23,6 +23,8 @@ customer.delete('/delete/:id', TodoController.deleteTodo)
 //routes profiles
 customer.post('/create-profile', ProfileController.createProfile)
 customer.get('/find-profile', ProfileController.findProfile)
+customer.put('/update-profile', ProfileController.updateProfile)
+
 
 
 module.exports = customer 

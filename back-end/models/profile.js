@@ -16,12 +16,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Profile.init({
-    fullname: {
+    username: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { msg: "fullname is required!" },
-        notNull: { msg: "fullname is required!" }
+        notEmpty: { msg: "username is required!" },
+        notNull: { msg: "username is required!" }
       }
     },
     bio: {

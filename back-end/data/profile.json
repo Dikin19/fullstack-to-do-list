@@ -1,13 +1,13 @@
 [
   {
-    "fullname": "Muhamad Sodikin",
+    "username": "user1",
     "bio": "Fullstack Developer yang suka ngulik Next.js dan Node.js",
     "avatarUrl": "https://i.pravatar.cc/150?img=1",
     "phone": "081234567890",
     "userId": 1
   },
   {
-    "fullname": "Agus Pratama",
+    "username": "user2",
     "bio": "Backend Engineer yang hobi ngopi dan belajar Docker",
     "avatarUrl": "https://i.pravatar.cc/150?img=2",
     "phone": "081987654321",
