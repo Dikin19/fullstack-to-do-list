@@ -33,7 +33,8 @@ module.exports = class TodoController {
 
         try {
             
-            const {title, description, status, priority, userId, dueDate} = req.body
+            const {id} = req.user
+            const {title, description, status, priority, dueDate} = req.body
 
             console.log(`\n
             ==============================
@@ -52,7 +53,7 @@ module.exports = class TodoController {
                 description,
                 status,
                 priority,
-                userId,
+                userId: id,
                 dueDate
             })
 

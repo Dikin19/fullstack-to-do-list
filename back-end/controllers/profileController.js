@@ -29,12 +29,13 @@ module.exports = class ProfileController {
 
     }
 
-    static async findProfile (req, res, next) {
+    static async findProfile (req, res, next) {``
 
         try {
             
             // data user yang sedang login menggunakan authentication
             const isLogging = req.user
+            console.log('profile user login', isLogging);
 
             const userProfile = await Profile.findOne({
 
@@ -164,6 +165,18 @@ module.exports = class ProfileController {
 
     }
 
-    
+    // Soft Delete Profile (paranoid mode)
+    static async softDelete (req, res,next) {
+
+        try {
+            
+            const {username} = req.user
+            console.log('\n Apakah username dari user login masuk? :', username);
+
+        } catch (error) {
+            
+        }
+
+    }
 
 }

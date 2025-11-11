@@ -1,6 +1,7 @@
 const express = require('express')
 const TodoController = require('../controllers/todoController')
 const ProfileController = require('../controllers/profileController')
+const {authorizationTodo} = require('../midlewares/authorization')
 const customer = express.Router()
 
 
@@ -18,12 +19,13 @@ customer.post('/testing', (req, res) => {
 customer.get('/find-all-todos', TodoController.findAllTodo)
 customer.post('/create-todo', TodoController.createTodo)
 customer.put('/update-todo/:id',TodoController.updateTodo)
-customer.delete('/delete/:id', TodoController.deleteTodo)
+customer.delete('/delete-todo/:id',authorizationTodo,TodoController.deleteTodo)
 
 //routes profiles
 customer.post('/create-profile', ProfileController.createProfile)
 customer.get('/find-profile', ProfileController.findProfile)
 customer.put('/update-profile', ProfileController.updateProfile)
+customer.delete('/delete-profile/:username', ProfileController.softDelete)// softDelete
 
 
 

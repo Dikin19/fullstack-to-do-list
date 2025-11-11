@@ -9,7 +9,7 @@ module.exports = class AuthController {
 
         try {
 
-            const { username, email, password } = req.body
+            const { username, email, password, status } = req.body
 
             // basic validation
             // if (!username || !email || !password) {
@@ -19,14 +19,16 @@ module.exports = class AuthController {
             const dataUser = await User.create({
                 username,
                 email,
-                password
+                password,
+                status
             })
 
             return res.status(201).json({
 
                 id: dataUser.id,
                 username: dataUser.username,
-                email: dataUser.email
+                email: dataUser.email,
+                status: dataUser.status
                 
             })
 
