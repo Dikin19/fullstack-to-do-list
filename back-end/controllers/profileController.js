@@ -1,5 +1,4 @@
-
-const {Profile} = require('../models')
+const {Profile} = require('../models');
 
 module.exports = class ProfileController {
 
@@ -39,8 +38,8 @@ module.exports = class ProfileController {
 
             const userProfile = await Profile.findOne({
 
-                where: {
-                    userId: isLogging.id
+                where: {    
+                    username: isLogging.username
                 }
             })
 
@@ -69,12 +68,11 @@ module.exports = class ProfileController {
 
         try {
 
-            const userId = req.user.id
-            console.log('\n apakah userId dari user yang sedang login masuk?:', userId);
+            const isLogging = req.user
+            const {username} = req.user
+            console.log('\n apakah userId dari user yang sedang login masuk?:', isLogging);
 
             const {
-
-                fullname,
                 bio,
                 avatarUrl,
                 phone
@@ -84,7 +82,6 @@ module.exports = class ProfileController {
                 
                 apakah semua req body masuk?
                 ==============================
-                fullname: ${fullname}
                 bio: ${bio}
                 avatarUrl: ${avatarUrl}
                 phone: ${phone}
@@ -92,16 +89,16 @@ module.exports = class ProfileController {
                 
                 `);
 
-            const isProfileExist = await Profile.findOne({where: {userId}})
+            const isProfileExist = await Profile.findOne({where: {username}})
             console.log('apakah profile sudah ada? :',isProfileExist);
             if(isProfileExist) throw({name: 'BadRequest', message: 'Profile Already Exists for this user'})
             
             const newProfile = await Profile.create({
-                fullname,
+                username,
                 bio,
                 avatarUrl,
                 phone,
-                userId
+                userId: isLogging.id
             })
 
             res.status(201).json({
@@ -119,20 +116,54 @@ module.exports = class ProfileController {
 
     static async updateProfile (req, res, next) {
 
-        const {id} = req.user
-        console.log(`
+        try {
+
+            const { id: userId, username} = req.user
+            console.log(`
             ==========================
-            apakah params sudah masu ? ${id}
+            apakah params sudah masu ? ${username}
             ==========================
             \n`);
 
-        const oldProfile = await Profile.findByPk(id)
-        console.log(`
+            const oldProfile = await Profile.findOne({where:{username}})
+            console.log(`
             '================================='
-            'Apakah data profile masuk ?' ${oldProfile}
+            'Apakah data profile masuk ?' ${JSON.stringify(oldProfile, null, 2)};
             '================================='
             `);
 
+            if (!oldProfile) throw({name: 'NotFound', message: 'Profile is not found'})
+
+            const {
+                bio,
+                avatarUrl,
+                phone,
+            } = req.body
+
+            const updateProfile = await Profile.update(
+                { bio, avatarUrl, phone, userId},
+                { where: {username}}
+            )
+            console.log('apakah update profile berhasil ?', updateProfile);
+            
+            const newProfile = await Profile.findOne({where:{username}})
+            console.log('apakah data terbaru profile berhasil ?', newProfile.get());
+
+            res.status(200).json({
+                status: 'success',
+                message: 'Profile has been updated',
+                profile: newProfile
+            })
+            
+
+        } catch (err) {
+            console.log(err);
+            next(err)
+            
+        }
+
     }
+
+    
 
 }
