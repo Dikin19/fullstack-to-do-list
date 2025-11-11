@@ -170,10 +170,24 @@ module.exports = class ProfileController {
 
         try {
             
-            const {username} = req.user
-            console.log('\n Apakah username dari user login masuk? :', username);
+            const {id} = req.user
+            console.log('\n Apakah username dari user login masuk? :', id);
 
-        } catch (error) {
+            const profile = await Profile.findOne({where: {userId: id}});
+            
+            if (!profile) throw({name: "NotFound", message: "profile is not found"});
+            console.log('apakah data profile masuk?', profile);
+
+            await Profile.destroy({where:{userId: id}})
+
+            res.status(200).json({
+                status : 'success',
+                message: `profile of id ${id} berhasil dihapus (soft delete)`
+            })
+
+        } catch (err) {
+            console.log(err);
+            next(err)
             
         }
 
