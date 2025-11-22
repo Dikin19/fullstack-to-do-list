@@ -29,6 +29,30 @@ module.exports = class ProfileController {
 
     }
 
+    static async findAllWithDeleted (req, res, next) {
+
+        try {
+
+             const profile = await Profile.findAll({paranoid: false})
+             
+             if(!profile || profile.length===0) throw({name: 'NotFound', message: 'profile is not found'})
+             console.log('apakah data masuk', profile);
+
+             res.status(200).json({
+                status: 'success',
+                message: 'Profile data can be opnened',
+                total: profile.length,
+                data: profile
+             })
+
+            
+        } catch (err) {
+            console.log(err);
+            next(err)
+            
+        }
+    }
+
     static async findProfile (req, res, next) {``
 
         try {
